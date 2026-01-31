@@ -1,0 +1,35 @@
+- name: Deploy and secure python app
+  hosts: web_servers
+  become: yes
+
+  tasks:
+    - name: Update apt repo
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+
+    - name: Install required system packages
+      apt:
+        name: [python3, python3-pip, ufw]
+        state: present
+
+    - name: Install Flask web framework
+      pip:
+        name: flask
+        state: present
+
+    - name: Configure firewall (allow ssh and app port)
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+      loop:
+        - '22'
+        - '5000'
+
+    - name: Enable ufw firewall
+      ufw:
+        state: enabled
+
+    - name: Start the app
+      shell: "nohup python3 ../app/main.py > log.txt 2>&1 &"
