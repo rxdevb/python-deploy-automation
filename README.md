@@ -65,7 +65,3 @@ To get this automation running, follow these steps.
 The project is structured to separate the application code from the deployment logic:
 *   `/ansible` - Contains the deployment playbook (`deploy.yml`) and inventory.
 *   `/app` - Contains the Flask application source code (`main.py`).
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
